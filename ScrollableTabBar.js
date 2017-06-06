@@ -58,7 +58,12 @@ const ScrollableTabBar = React.createClass({
     this.props.scrollValue.addListener(this.updateView);
   },
 
+  componentWillUnmount() {
+    this.props.scrollValue.removeListener(this.updateView);
+  },
+
   updateView(offset) {
+    if (!this._scrollView) return;
     const position = Math.floor(offset.value);
     const pageOffset = offset.value % 1;
     const tabCount = this.props.tabs.length;
